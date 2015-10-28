@@ -21,7 +21,7 @@ mongoose.connect(credentials.url);
 
 // render index page
 app.get('/', function(req, res) {
-  res.render('index');
+  res.render('index', {users: [{ name: 'paulo'}]});
 });
 
 
@@ -45,10 +45,18 @@ app.get('/list', function (req, res) {
     });
 });
 
+//
+//var server = app.listen(3000, function () {
+//  var host = server.address().address;
+//  var port = server.address().port;
+//
+//  console.log('Example app listening at http://%s:%s', host, port);
+//});
 
-var server = app.listen(3000, function () {
+var port = process.env.VCAP_APP_PORT || 3000;
+var server = app.listen(port, function () {
   var host = server.address().address;
   var port = server.address().port;
 
-  console.log('Example app listening at http://%s:%s', host, port);
+  console.log('Owl is listening at http://%s:%s', host, port);
 });
