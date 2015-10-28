@@ -10,40 +10,69 @@ var express = require('express'),
 // Bootstrap application settings
 require('./config/express')(app);
 
-var Call = require( './call.js' );
+var User = require( './config/models/User.js' );
+var Call = require( './config/models/Call.js' );
+
 
 var credentials = extend({
     url: 'mongodb://IbmCloud_egenbukb_85n5pafd_7tldin3o:8WDNcy5Y8wuujC5Px9XJL7hkcRKMsvea@ds045464.mongolab.com:45464/IbmCloud_egenbukb_85n5pafd'
-}, bluemix.getServiceCreds('tone_analyzer'));
+}, bluemix.getServiceCreds('XYZZZ'));
 //mongoose.connect('mongodb://IbmCloud_egenbukb_85n5pafd_7tldin3o:8WDNcy5Y8wuujC5Px9XJL7hkcRKMsvea@ds045464.mongolab.com:45464/IbmCloud_egenbukb_85n5pafd');
 mongoose.connect(credentials.url);
 
 
 // render index page
 app.get('/', function(req, res) {
-  res.render('index', {users: [{ name: 'paulo'}]});
+    User.find({}, function(err, users) {
+        if (err) throw err;
+        // object of all the users
+        //res.json(users);
+        res.render('index', {users: users});
+    });
+  
 });
 
 
-app.get('/hello', function (req, res) {
+app.get('/saveUser', function (req, res) {
   res.send('Hello World!fff');
-//    var test = new Call({ title: 'AA AAA AAA'});
-//
-//test.save(function(err) {
-//  if (err) throw err;
-//  console.log('User saved successfully!');
-//});
+    var test = new User();
+
+test.save(function(err) {
+  if (err) throw err;
+  console.log('User saved successfully!');
+});
+    
+});
+
+app.get('/saveCall', function (req, res) {
+  res.send('Hello World!fff');
+    var test = new Call();
+
+test.save(function(err) {
+  if (err) throw err;
+  console.log('Call saved successfully!');
+});
     
 });
 
 
-app.get('/list', function (req, res) {
+
+app.get('/listCalls', function (req, res) {
     Call.find({}, function(err, users) {
         if (err) throw err;
         // object of all the users
         res.json(users);
     });
 });
+
+app.get('/listUsers', function (req, res) {
+    User.find({}, function(err, users) {
+        if (err) throw err;
+        // object of all the users
+        res.json(users);
+    });
+});
+
 
 //
 //var server = app.listen(3000, function () {

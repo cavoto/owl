@@ -14,6 +14,14 @@ html(lang='en')
         link(rel='stylesheet', href='/css/style.css')
 
     body
+        mixin sentiment(value)
+            if value === 1
+                img(src='/images/1.png')
+            else if value === 2
+                img(src='/images/2.png')
+            else
+                img(src='/images/3.png')
+
         div
             block row-content
         script(type='text/javascript', src='/js/lib/jquery-2.1.0.min.js')
