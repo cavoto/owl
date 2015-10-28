@@ -3,7 +3,10 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
-    username:  { type: String, default: 'Paul' },
+    username:  { type: String, default: 'paulmc' },
+    firstName:  { type: String, default: 'Paul' },
+    lastName:  { type: String, default: 'Mc' },
+    picture:  { type: String, default: 'user.png' },
     sentiment: { type: Number, default: 3 }
 });
 

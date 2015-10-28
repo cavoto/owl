@@ -12,17 +12,26 @@ html(lang='en')
         link(rel='icon', href='/images/favicon.ico', type='image/x-icon')
         link(rel='stylesheet', href='/css/watson-bootstrap-dark.css')
         link(rel='stylesheet', href='/css/style.css')
+        link(rel='stylesheet', href='/css/datetimepicker.css')
 
     body
         mixin sentiment(value)
             if value === 1
-                img(src='/images/1.png')
+                img(src='/images/s_bom_small.png')
             else if value === 2
-                img(src='/images/2.png')
+                img(src='/images/s_medio_small.png')
             else
-                img(src='/images/3.png')
-
-        div
+                img(src='/images/s_ruim_small.png')
+        mixin user_photo(name)
+            if name !== undefined
+                img(src='/images/#{name}.png')
+            else
+                img(src='/images/user.png')
+        include header.jade
+        
+        div.main
             block row-content
         script(type='text/javascript', src='/js/lib/jquery-2.1.0.min.js')
         script(type='text/javascript', src='/js/lib/bootstrap-3.3.1.min.js')
+        block scripts
+            

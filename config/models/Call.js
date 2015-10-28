@@ -1,10 +1,9 @@
 var mongoose = require('mongoose');
 
- 
 var Schema = mongoose.Schema;
 
 var callSchema = new Schema({
-    user:  { type: String, default: 'Ringo' },
+    username:  { type: String, default: 'paulmc' },
     creationDate: { type: Date, default: Date.now },
     date: { type: Date, default: Date.now },
     sentiment: { type: Number, default: 3 },
@@ -14,18 +13,17 @@ var callSchema = new Schema({
 
 callSchema.post("save", function (result) {
     var self = this;
-
-    mongoose.models["User"].findOne( { username: self.user }, function (err, user) {        
+console.log(result);
+    mongoose.models["User"].findOne( { username: self.username }, function (err, user) {        
         if (user) {
             console.log("User found");
-//            console.log(user);
         } else {
             console.log("User not found");
             var User = mongoose.model('User');
-            var newUser = new User({ username: self.user });
+            var newUser = new User({ username: self.username });
             newUser.save(function (err) {
                 if (err) throw err;
-                console.log('User saved successfully!');
+                console.log('User created!');
             });
         }
     });

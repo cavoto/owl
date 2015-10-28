@@ -8,4 +8,19 @@ html {
 }
 
 body {
+    background-color: #0C2552;
 }
+
+.main {
+    background-color: #FFF;
+}
+
+.mngr_name {
+    background-color: #FFF;
+    font-size: 40px;
+    color: #0C2552;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+}
+

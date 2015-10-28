@@ -1,0 +1,21 @@
+//- index.jade
+extends ./layout.jade
+block row-content
+    div      
+        .row
+            .col-lg-4.col-md-4.col-sm-12
+                .col-lg-12.col-md-12.col-sm-12
+                    .col-lg-4.col-md-4.col-sm-4
+                        mixin user_photo(user.photo)
+                    .col-lg-4.col-md-4.col-sm-4
+                        | #{user.username}
+                    .col-lg-4.col-md-4.col-sm-4
+                        mixin sentiment(user.sentiment)
+            .col-lg-4.col-md-4.col-sm-12
+                each call in calls
+                    a(href="/user/#{call.username}/call/#{call._id}")
+                        .col-lg-12.col-md-12.col-sm-12
+                            .col-lg-4.col-md-4.col-sm-4
+                                span='(Created at: ' + moment(call.date).format("YYYY/MM/DD") + ')'
+                            .col-lg-4.col-md-4.col-sm-4
+                                mixin sentiment(call.sentiment)

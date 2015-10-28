@@ -1,0 +1,36 @@
+extends ./layout.jade
+block row-content
+    div.container     
+        .row
+            .col-lg-12.col-md-12.col-sm-12
+                form#form_create
+                    .form-group
+                        label(for='username') User Name
+                        select#username.form-control(name='username')
+                            option john
+                            option paul
+                            option ringo
+                    .form-group
+                        #datetimepicker12.input-group.date
+                            label(for='date') Date
+                            input.form-control(type='text', name='date')
+                            span.input-group-addon
+                                span.fa.fa-calendar
+                    .form-group
+                        label(for='text') Transcript
+                        textarea#text.form-control(name='text')
+                    .form-group
+                        label(for='sentiment') Sentiment
+                            select#sentiment.form-control(name='sentiment')
+                                option 1
+                                option 2
+                                option 3
+                    .form-group
+                        label(for='audioFile') File input
+                        input#audioFile(type='file')
+                p 
+                    button#createCall_btn.btn.btn-default Submit
+block scripts
+    script(type='text/javascript', src='/js/util.js')
+    script(type='text/javascript', src='/js/lib/moment.min.js')
+    script(type='text/javascript', src='/js/lib/bootstrap-datetimejs.js')
