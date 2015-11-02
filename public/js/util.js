@@ -1,13 +1,13 @@
 $( document ).ready(function() {
   // Handler for .ready() called.
     $('#datetimepicker12').datetimepicker({
-               icons: {
-                    time: "fa fa-clock-o",
-                    date: "fa fa-calendar",
-                    up: "fa fa-arrow-up",
-                    down: "fa fa-arrow-down"
-                }
-            });
+       icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down"
+        }
+    });
     
     $("#createCall_btn").click(function(){
         var data = $('form').serializeArray();

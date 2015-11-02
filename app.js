@@ -5,11 +5,20 @@ var express = require('express'),
     bluemix = require('./config/bluemix'),
     extend = require('util')._extend,
     watson = require('watson-developer-cloud'),
-    mongoose = require('mongoose');
+    mongoose = require('mongoose'),
+    _ = require('lodash');
 
 // Bootstrap application settings
 require('./config/express')(app);
 app.locals.moment = require('moment');
+app.locals._ = require('lodash');
+
+var sentiment_bar = {
+    1: "Good",
+    2: "Medium",
+    3: "Bad"
+};
+
 var User = require('./config/models/User.js');
 var Call = require('./config/models/Call.js');
 
@@ -27,16 +36,36 @@ app.get('/', function (req, res) {
     User.find({}, function (err, users) {
         if (err) throw err;
         // object of all the users
-        //res.json(users);
+
+        var result = _.reduce(users, function (result, n, key) {
+            var sentiment = _.floor(n.sentiment);
+            result[sentiment] = (result[sentiment] || 0) + 1;
+            return result;
+        }, {});
+
+        var graph = {};
+        graph.data = [];
+
+
+        _.forOwn(result, function (value, key) {
+            graph.data.push({
+                label: sentiment_bar[key],
+                value: value
+            });
+        });
+
+        graph.type = "pie";
+
         res.render('team', {
-            users: users
+            users: users,
+            graph_data: graph
         });
     });
 });
 
 app.get('/user/:username', function (req, res) {
     var username = req.params.username;
-    
+
     User.findOne({
             username: username
         }).lean().exec()
@@ -52,9 +81,15 @@ app.get('/user/:username', function (req, res) {
         .then(function (result) {
             var user = result[0];
             var calls = result[1];
+
+            var graph = {};
+            graph.data = calls;
+            graph.type = "line";
+        
             res.render('user', {
                 user: user,
-                calls: calls
+                calls: calls,
+                graph_data : graph
             });
         });
 });
@@ -127,16 +162,20 @@ app.post('/rest/call/create', function (req, res) {
     console.log(req.body);
 
     var newCall = new Call(req.body);
-//console.log(newCall);
+    //console.log(newCall);
     newCall.save(function (err) {
         if (err) throw err;
         console.log('Call saved successfully!');
-        res.json({msg: 'OK'});
+        res.json({
+            msg: 'OK'
+        });
     });
 });
-           
+
 app.get('/create', function (req, res) {
-     res.render('createCall', {});
+    res.render('createCall', {
+        teste: 'sasdasd'
+    });
 });
 
 app.get('/saveUser', function (req, res) {

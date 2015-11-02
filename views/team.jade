@@ -13,3 +13,9 @@ block row-content
                                 | #{user.username}
                             .col-lg-4.col-md-4.col-sm-4
                                 mixin sentiment(user.sentiment)
+            .col-lg-4.col-md-4.col-sm-12
+                #graph_pie
+    div#graph_data
+       | #{JSON.stringify(graph_data)}
+block scripts
+    script(type='text/javascript', src='/js/graph.js')

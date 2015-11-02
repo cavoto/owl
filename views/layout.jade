@@ -13,25 +13,16 @@ html(lang='en')
         link(rel='stylesheet', href='/css/watson-bootstrap-dark.css')
         link(rel='stylesheet', href='/css/style.css')
         link(rel='stylesheet', href='/css/datetimepicker.css')
-
+        link(rel='stylesheet', href='//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css')
+        include mixin.jade
     body
-        mixin sentiment(value)
-            if value === 1
-                img(src='/images/s_bom_small.png')
-            else if value === 2
-                img(src='/images/s_medio_small.png')
-            else
-                img(src='/images/s_ruim_small.png')
-        mixin user_photo(name)
-            if name !== undefined
-                img(src='/images/#{name}.png')
-            else
-                img(src='/images/user.png')
         include header.jade
         
         div.main
             block row-content
         script(type='text/javascript', src='/js/lib/jquery-2.1.0.min.js')
         script(type='text/javascript', src='/js/lib/bootstrap-3.3.1.min.js')
+        script(src='//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js')
+        script(src='//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js')
         block scripts
             

@@ -3,15 +3,17 @@ extends ./layout.jade
 block row-content
     div      
         .row
-            .col-lg-4.col-md-4.col-sm-12
-                .col-lg-12.col-md-12.col-sm-12
+            .col-lg-3.col-md-3.col-sm-12
+                .row
                     .col-lg-4.col-md-4.col-sm-4
                         mixin user_photo(user.photo)
                     .col-lg-4.col-md-4.col-sm-4
                         | #{user.username}
                     .col-lg-4.col-md-4.col-sm-4
                         mixin sentiment(user.sentiment)
-            .col-lg-4.col-md-4.col-sm-12
+                .row
+                    div#graph
+            .col-lg-3.col-md-3.col-sm-12
                 each call in calls
                     a(href="/user/#{call.username}/call/#{call._id}")
                         .col-lg-12.col-md-12.col-sm-12
@@ -19,3 +21,9 @@ block row-content
                                 span='(Created at: ' + moment(call.date).format("YYYY/MM/DD") + ')'
                             .col-lg-4.col-md-4.col-sm-4
                                 mixin sentiment(call.sentiment)
+            .col-lg-6.col-md-6.col-sm-12
+                .div#graph_line
+    div#graph_data(style='display:none;')
+       | #{JSON.stringify(graph_data)}
+block scripts
+    script(type='text/javascript', src='/js/graph.js')

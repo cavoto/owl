@@ -7,7 +7,9 @@ var userSchema = new Schema({
     firstName:  { type: String, default: 'Paul' },
     lastName:  { type: String, default: 'Mc' },
     picture:  { type: String, default: 'user.png' },
-    sentiment: { type: Number, default: 3 }
+    sentiment: { type: Number, default: 3 },
+    calls: { type: Number, default: 0 },
+    sentiment_sum: { type: Number, default: 3 }
 });
 
 //callSchema.pre("save", function(next) {

@@ -1,0 +1,12 @@
+mixin sentiment(value)
+    if _.floor(value) === 1
+        img(src='/images/s_bom_small.png', title='#{value}')
+    else if _.floor(value) === 2
+        img(src='/images/s_medio_small.png', title='#{value}')
+    else
+        img(src='/images/s_ruim_small.png', title='#{value}')
+mixin user_photo(name)
+    if name !== undefined
+        img(src='/images/#{name}.png')
+    else
+        img(src='/images/user.png')
