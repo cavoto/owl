@@ -7,6 +7,14 @@ mixin sentiment(value)
         img(src='/images/s_ruim_small.png', title='#{value}')
 mixin user_photo(name)
     if name !== undefined
-        img(src='/images/#{name}.png')
+        img.img-circle(src='/images/#{name}.png')
     else
-        img(src='/images/user.png')
+        img.img-circle(src='/images/user.png')
+mixin user_card(user)
+    .user_card
+        .col-lg-4.col-md-4.col-sm-4
+            mixin user_photo(user.photo)
+        .col-lg-4.col-md-4.col-sm-4
+            | #{user.username}
+        .col-lg-4.col-md-4.col-sm-4
+            mixin sentiment(user.sentiment)

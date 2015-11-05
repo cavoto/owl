@@ -5,12 +5,7 @@ block row-content
         .row
             .col-lg-3.col-md-3.col-sm-12
                 .row
-                    .col-lg-4.col-md-4.col-sm-4
-                        mixin user_photo(user.photo)
-                    .col-lg-4.col-md-4.col-sm-4
-                        | #{user.username}
-                    .col-lg-4.col-md-4.col-sm-4
-                        mixin sentiment(user.sentiment)
+                    mixin user_card(user)
                 .row
                     div#graph
             .col-lg-3.col-md-3.col-sm-12
