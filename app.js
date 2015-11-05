@@ -56,7 +56,7 @@ app.get('/', function (req, res) {
 
         graph.type = "pie";
 
-        res.render('team', {
+        res.render('1_team', {
             users: users,
             graph_data: graph
         });
@@ -86,7 +86,7 @@ app.get('/user/:username', function (req, res) {
             graph.data = calls;
             graph.type = "line";
         
-            res.render('user', {
+            res.render('2_user', {
                 user: user,
                 calls: calls,
                 graph_data : graph
@@ -112,7 +112,7 @@ app.get('/user/:username/call/:callid', function (req, res) {
         .then(function (result) {
             var user = result[0];
             var call = result[1];
-            res.render('call', {
+            res.render('3_call', {
                 user: user,
                 call: call
             });
