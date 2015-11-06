@@ -34,7 +34,7 @@ mongoose.connect(credentials.url);
 
 // render index page
 app.get('/', function (req, res) {
-    Call.find({}).populate('_user').exec().then(function (calls) {
+    Call.find({}).sort('date').populate('_user').exec().then(function (calls) {
 
         //        var result = _.reduce(users, function (result, n, key) {
         //            var sentiment = _.floor(n.sentiment);
@@ -113,7 +113,7 @@ app.get('/user/:username', function (req, res) {
             var result = [];
             return Call.find({
                     _user: username
-                }).populate('_user').exec()
+                }).sort('date').populate('_user').exec()
                 .then(function (calls) {
                     return [user, calls];
                 });
