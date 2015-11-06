@@ -1,0 +1,15 @@
+extends ./layout.jade
+block row-content
+    div.container     
+        .row
+            .col-lg-12.col-md-12.col-sm-12
+                form#form_create
+                    .form-group
+                        label(for='_id') User Name
+                        input#_id.form-control(name='_id')
+                p 
+                    button#createUser_btn.btn.btn-default Submit
+block scripts
+    script(type='text/javascript', src='/js/util.js')
+    script(type='text/javascript', src='/js/lib/moment.min.js')
+    script(type='text/javascript', src='/js/lib/bootstrap-datetimejs.js')

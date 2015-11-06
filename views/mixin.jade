@@ -15,6 +15,8 @@ mixin user_card(user)
         .col-lg-4.col-md-4.col-sm-4
             mixin user_photo(user.photo)
         .col-lg-4.col-md-4.col-sm-4
-            | #{user.username}
+            | #{user.firstName}
+            br
+            | #{user.lastName}
         .col-lg-4.col-md-4.col-sm-4
             mixin sentiment(user.sentiment)
