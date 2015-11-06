@@ -6,6 +6,7 @@ var express = require('express'),
     extend = require('util')._extend,
     watson = require('watson-developer-cloud'),
     mongoose = require('mongoose'),
+    moment = require('moment'),
     _ = require('lodash');
 
 // Bootstrap application settings
@@ -51,48 +52,51 @@ app.get('/', function (req, res) {
                 value: value
             });
         });
-        
-        
+
+
         var users = _.pluck(_.uniq(calls, '_user'), '_user');
         var calls = _.groupBy(calls, '_user._id');
-        
 
-        
+        var temp = [];
+        for (var i = 0; i < 24; i++) {
+            temp[i] = i + (i < 12 ? "AM" : "PM")
+        };
         var dataT = {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
-//            labels: [],
+            labels: temp,
+            //            labels: [],
             datasets: [
-                {
-                    label: "My First dataset",
-                    fillColor: "rgba(220,220,220,0.2)",
-                    strokeColor: "rgba(220,220,220,1)",
-                    pointColor: "rgba(220,220,220,1)",
-                    pointHighlightFill: "#fff",
-                    data: [65, 59, 80, 81, 56, 55, 40]
-        },
-                {
-                    label: "My Second dataset",
-                    fillColor: "rgba(151,187,205,0.2)",
-                    strokeColor: "rgba(151,187,205,1)",
-                    pointColor: "rgba(151,187,205,1)",
-                    pointHighlightFill: "#fff",
-                    data: [28, 48, 40, 19, 86, 27, 90]
-        }
+//                {
+//                    label: "My First dataset",
+//                    fillColor: "rgba(220,220,220,0.2)",
+//                    strokeColor: "rgba(220,220,220,1)",
+//                    pointColor: "rgba(220,220,220,1)",
+//                    pointHighlightFill: "#fff",
+//                    data: [1, 2, 3, 3, 2, 1, 1, 1, 1]
+//        }
     ]
         };
 
         _.forOwn(calls, function (calls_arr, key) {
-//            console.log("----------------");
+            //            console.log("----------------");
             console.log(key);
-//            console.log(calls_arr);
-            dataT.datasets.push({ label: key, data: [65, 59, 80, 81, 56, 55, 42]})
-            _.forEach(calls_arr, function (call, call_key) {
-//                dataT.labels.push();
-//                console.log(call);
+            temp = [];
+            for (var i = 0; i < 24; i++) {
+                temp[i] = 0
+            };
+            _.forEach(calls_arr, function (call, key) {
+                console.log("bbb");
+                var hour = moment(call.date).format('HH')
+                console.log(Number(hour));
+                temp[Number(hour)] = call.sentiment;
             });
+
+            dataT.datasets.push({
+                label: key,
+                data: temp
+            })
         });
         graph.type = "pie";
-console.log(calls);
+        //        console.log(calls);
         res.render('1_team', {
             users: users,
             graph_data: dataT,
@@ -106,13 +110,13 @@ app.get('/user/:username', function (req, res) {
     var username = req.params.username;
 
     User.findOne({
-            username: username
-        }).lean().exec()
+            _id: username
+        }).exec()
         .then(function (user) {
             var result = [];
             return Call.find({
-                    username: username
-                }).lean().exec()
+                    _user: username
+                }).populate('_user').exec()
                 .then(function (calls) {
                     return [user, calls];
                 });
@@ -137,7 +141,7 @@ app.get('/user/:username/call/:callid', function (req, res) {
     var username = req.params.username;
     var callid = req.params.callid;
     User.findOne({
-            username: username
+            _id: username
         }).lean().exec()
         .then(function (user) {
             var result = [];
@@ -216,10 +220,10 @@ app.get('/rest/calls', function (req, res) {
 });
 
 app.post('/rest/call/create', function (req, res) {
-//    console.log(req.body);
+    //    console.log(req.body);
 
     var obj = new Call(req.body);
-     console.log('saved successfully1!');
+    console.log('saved successfully1!');
     //console.log(newCall);
     obj.save(function (err) {
         if (err) {

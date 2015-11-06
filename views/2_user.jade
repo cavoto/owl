@@ -10,7 +10,7 @@ block row-content
                     div#graph
             .col-lg-3.col-md-3.col-sm-12
                 each call in calls
-                    a(href="/user/#{call.username}/call/#{call._id}")
+                    a(href="/user/#{call._user._id}/call/#{call._id}")
                         .col-lg-12.col-md-12.col-sm-12
                             .col-lg-4.col-md-4.col-sm-4
                                 span='(Created at: ' + moment(call.date).format("YYYY/MM/DD") + ')'
