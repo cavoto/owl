@@ -13,7 +13,6 @@ html(lang='en')
         link(rel='stylesheet', href='/css/watson-bootstrap-dark.css')
         link(rel='stylesheet', href='/css/style.css')
         link(rel='stylesheet', href='/css/datetimepicker.css')
-        link(rel='stylesheet', href='//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css')
         include mixin.jade
     body
         include header.jade
@@ -22,6 +21,6 @@ html(lang='en')
             block row-content
         script(type='text/javascript', src='/js/lib/jquery-2.1.0.min.js')
         script(type='text/javascript', src='/js/lib/bootstrap-3.3.1.min.js')
-        script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js')
-        script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js')
+        script(src='/js/lib/Chart.min.js')
+        script(type='text/javascript', src='/js/lib/lodash.min.js')
         block scripts
