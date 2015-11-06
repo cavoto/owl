@@ -36,22 +36,22 @@ mongoose.connect(credentials.url);
 app.get('/', function (req, res) {
     Call.find({}).populate('_user').exec().then(function (calls) {
 
-        var result = _.reduce(users, function (result, n, key) {
-            var sentiment = _.floor(n.sentiment);
-            result[sentiment] = (result[sentiment] || 0) + 1;
-            return result;
-        }, {});
+        //        var result = _.reduce(users, function (result, n, key) {
+        //            var sentiment = _.floor(n.sentiment);
+        //            result[sentiment] = (result[sentiment] || 0) + 1;
+        //            return result;
+        //        }, {});
 
-        var graph = {};
-        graph.data = [];
+        //        var graph = {};
+        //        graph.data = [];
 
 
-        _.forOwn(result, function (value, key) {
-            graph.data.push({
-                label: sentiment_bar[key],
-                value: value
-            });
-        });
+        //        _.forOwn(result, function (value, key) {
+        //            graph.data.push({
+        //                label: sentiment_bar[key],
+        //                value: value
+        //            });
+        //        });
 
 
         var users = _.pluck(_.uniq(calls, '_user'), '_user');
@@ -95,13 +95,10 @@ app.get('/', function (req, res) {
                 data: temp
             })
         });
-        graph.type = "pie";
-        //        console.log(calls);
+
         res.render('1_team', {
             users: users,
-            graph_data: dataT,
-            graph_data_1: graph,
-            graph_data_2: graph
+            graph_data: dataT
         });
     });
 });
@@ -125,14 +122,38 @@ app.get('/user/:username', function (req, res) {
             var user = result[0];
             var calls = result[1];
 
-            var graph = {};
-            graph.data = calls;
-            graph.type = "line";
 
+            var dataT = {
+                labels: [],
+                //            labels: [],
+                datasets: [
+//                {
+//                    label: "My First dataset",
+//                    fillColor: "rgba(220,220,220,0.2)",
+//                    strokeColor: "rgba(220,220,220,1)",
+//                    pointColor: "rgba(220,220,220,1)",
+//                    pointHighlightFill: "#fff",
+//                    data: [1, 2, 3, 3, 2, 1, 1, 1, 1]
+//        }
+    ]
+            };
+            var temp = [];
+            _.forEach(calls, function (call, key) {
+
+                dataT.labels.push(moment(call.date).format('DD/MM HH:mm'));
+                temp.push(call.sentiment);
+
+
+
+            });
+            dataT.datasets.push({
+                label: user._id,
+                data: temp
+            })
             res.render('2_user', {
                 user: user,
                 calls: calls,
-                graph_data: graph
+                graph_data: dataT
             });
         });
 });

@@ -21,7 +21,6 @@ $(document).ready(function () {
                 graphObj.datasets[key].pointHighlightFill = "#fff";
                 graphObj.datasets[key].fillColor = "rgba(220,220,220,0.2)";
             });
-            
 
             // This will get the first returned node in the jQuery collection.
             var myNewChart = new Chart(ctx).Line(graphObj);

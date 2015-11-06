@@ -17,8 +17,8 @@ block row-content
                             .col-lg-4.col-md-4.col-sm-4
                                 mixin sentiment(call.sentiment)
             .col-lg-6.col-md-6.col-sm-12
-                .div#graph_line
-    div#graph_data(style='display:none;')
+                canvas#graph_line
+    div#graph_data
        | #{JSON.stringify(graph_data)}
 block scripts
     script(type='text/javascript', src='/js/graph.js')
