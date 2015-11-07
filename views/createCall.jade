@@ -8,8 +8,8 @@ block row-content
                         label(for='username') User Name
                         select#_user.form-control(name='_user')
                             option john
-                            option paul
-                            option ringo
+                            for user in users
+                                option #{user._id}
                     .form-group
                         #datetimepicker12.input-group.date
                             label(for='date') Date
