@@ -16,11 +16,12 @@ $( document ).ready(function() {
             alert( "Data Loaded: " + data );
           });
     });
-    $("#createUser_btn").click(function(){
+    $("#create_form").submit(function(){
+        event.preventDefault();
         var data = $('form').serializeArray();
-        
+
         $.post( "/rest/user/create", data) .done(function( data ) {
-            alert( "Data Loaded: " + data );
+            alert( "Response: " + data.msg );
           });
     });
 });
