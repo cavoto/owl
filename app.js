@@ -280,6 +280,36 @@ app.get('/saveUser', function (req, res) {
 });
 
 
+var credentials_tone = extend({
+  version: 'v2',
+    url: 'https://gateway.watsonplatform.net/tone-analyzer-experimental/api',
+  username: '38505db1-0391-48ed-887d-bf646d7a5062',//
+  password: 'GpODak1w6Xxh'//
+}, bluemix.getServiceCreds('tone_analyzer'));
+
+
+// Create the service wrapper
+var toneAnalyzer = watson.tone_analyzer(credentials_tone);
+
+app.post('/tone', function(req, res, next) {
+  
+    toneAnalyzer.tone(req.body, function(err, data) {
+    if (err)
+      return next(err);
+    else
+      return res.json(data);
+  });
+});
+
+app.get('/synonyms', function(req, res, next) {
+  toneAnalyzer.synonym(req.query, function(err, data) {
+    if (err)
+      return next(err);
+    else
+      return res.json(data);
+  });
+});
+
 //
 //var server = app.listen(3000, function () {
 //  var host = server.address().address;
