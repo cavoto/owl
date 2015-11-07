@@ -81,7 +81,8 @@ $(document).ready(function() {
     showError(error ? (error.error || error): '');
   }
 
-  $analyzeBtn.click(function() {
+//  $analyzeBtn.click(function() {
+  function analyze () {
     $loading.show();
     $results.hide();
 //    $inputRow.hide();
@@ -112,7 +113,8 @@ $(document).ready(function() {
 //        $('.output-div')[0].scrollIntoView(true); // Boolean arguments
 
       });
-  });
+  }
+//  });
 
   /**
    * Display an error or a default message
@@ -542,4 +544,6 @@ $(document).ready(function() {
 //    }, 30);
 //  });
 
+    
+    analyze();
 });

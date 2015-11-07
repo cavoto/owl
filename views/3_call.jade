@@ -14,7 +14,7 @@ block row-content
                             mixin sentiment(call.sentiment) 
             .col-lg-8.col-md-8.col-sm-12
                 div.container
-                    div.row#inputRow
+                    div.row#inputRow(style="display:none;")
                         form.form-horizontal(method='post')
                           div.well
                             fieldset
@@ -34,7 +34,7 @@ block row-content
                         div.row
                     div.row#loading(style="display:none;")
                       div.loader
-                        img(src="images/loading-indicator.gif")
+                        img(src="/images/loading-indicator.gif")
                     div.row.error(style='display: none;')
                       div.col-lg-12.well
                         p.errorMsg
