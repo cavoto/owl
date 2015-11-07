@@ -198,7 +198,12 @@ app.get('/user/:username/call/:callid', function (req, res) {
 
 
 app.get('/calls/create', function (req, res) {
-    res.render('createCall');
+    User.find({}, function (err, users) {
+        if (err) throw err;
+        // object of all the users
+        res.render('createCall', {users : users});
+    });
+    
 });
 
 app.get('/users/create', function (req, res) {
