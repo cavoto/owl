@@ -24,4 +24,13 @@ $( document ).ready(function() {
             alert( "Response: " + data.msg );
           });
     });
+    
+    $("#create_form_call").submit(function(){
+        event.preventDefault();
+        var data = $('form').serializeArray();
+
+        $.post( "/rest/call/create", data) .done(function( data ) {
+            alert( "Response: " + data.msg );
+          });
+    });
 });
