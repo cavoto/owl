@@ -9,8 +9,13 @@ var express = require('express'),
     moment = require('moment'),
     _ = require('lodash');
 
+var User = require('./config/models/User.js');
+var Call = require('./config/models/Call.js');
+
 // Bootstrap application settings
 require('./config/express')(app);
+
+// Locals are libraries available to Jade files
 app.locals.moment = require('moment');
 app.locals._ = require('lodash');
 
@@ -20,18 +25,27 @@ var sentiment_bar = {
     3: "Bad"
 };
 
-var User = require('./config/models/User.js');
-var Call = require('./config/models/Call.js');
-
-
+//############## Mongo services  ##############//
 var credentials = extend({
     url: 'mongodb://IbmCloud_egenbukb_85n5pafd_7tldin3o:8WDNcy5Y8wuujC5Px9XJL7hkcRKMsvea@ds045464.mongolab.com:45464/IbmCloud_egenbukb_85n5pafd'
 }, bluemix.getServiceCreds('XYZZZ'));
 //mongoose.connect('mongodb://IbmCloud_egenbukb_85n5pafd_7tldin3o:8WDNcy5Y8wuujC5Px9XJL7hkcRKMsvea@ds045464.mongolab.com:45464/IbmCloud_egenbukb_85n5pafd');
-
 mongoose.connect(credentials.url);
+//##//
 
 
+//############## Tone_analyzer services  ##############//
+var credentials_tone = extend({
+    version: 'v2',
+    url: 'https://gateway.watsonplatform.net/tone-analyzer-experimental/api',
+    username: '38505db1-0391-48ed-887d-bf646d7a5062', //
+    password: 'GpODak1w6Xxh' //
+}, bluemix.getServiceCreds('tone_analyzer'));
+//##//
+
+
+
+//############## Page routes  ##############//
 // render index page
 app.get('/', function (req, res) {
     Call.find({}).sort('date').populate('_user').exec().then(function (calls) {
@@ -77,7 +91,6 @@ app.get('/', function (req, res) {
         };
 
         _.forOwn(calls, function (calls_arr, key) {
-            //            console.log("----------------");
             console.log(key);
             temp = [];
             for (var i = 0; i < 24; i++) {
@@ -184,6 +197,26 @@ app.get('/user/:username/call/:callid', function (req, res) {
 });
 
 
+app.get('/calls/create', function (req, res) {
+    res.render('createCall');
+});
+
+app.get('/users/create', function (req, res) {
+    res.render('createUser');
+});
+
+//##########################################//
+//############## Rest Routes  ##############//
+//##########################################//
+
+app.get('/rest/users', function (req, res) {
+    User.find({}, function (err, users) {
+        if (err) throw err;
+        // object of all the users
+        res.json(users);
+    });
+});
+
 app.get('/rest/user/:username', function (req, res) {
     var username = req.params.username;
 
@@ -195,14 +228,6 @@ app.get('/rest/user/:username', function (req, res) {
     });
 });
 
-app.get('/rest/users', function (req, res) {
-    User.find({}, function (err, users) {
-        if (err) throw err;
-        // object of all the users
-        res.json(users);
-    });
-});
-
 app.post('/rest/user/create', function (req, res) {
     console.log(req.body);
 
@@ -211,15 +236,25 @@ app.post('/rest/user/create', function (req, res) {
     obj.save(function (err) {
         if (err) {
             console.log(err);
-            throw err;
+            res.json({
+                msg: err.message
+            });
+        } else {
+            console.log('saved successfully!');
+            res.json({
+                msg: 'OK'
+            });
         }
-        console.log('saved successfully!');
-        res.json({
-            msg: 'OK'
-        });
     });
 });
 
+app.get('/rest/calls', function (req, res) {
+    Call.find({}, function (err, calls) {
+        if (err) throw err;
+        // object of all the users
+        res.json(calls);
+    });
+});
 
 app.get('/rest/call/:callid', function (req, res) {
     var callid = req.params.callid;
@@ -232,17 +267,7 @@ app.get('/rest/call/:callid', function (req, res) {
     });
 });
 
-app.get('/rest/calls', function (req, res) {
-    Call.find({}, function (err, calls) {
-        if (err) throw err;
-        // object of all the users
-        res.json(calls);
-    });
-});
-
 app.post('/rest/call/create', function (req, res) {
-    //    console.log(req.body);
-
     var obj = new Call(req.body);
     console.log('saved successfully1!');
     //console.log(newCall);
@@ -258,66 +283,32 @@ app.post('/rest/call/create', function (req, res) {
     });
 });
 
-app.get('/create', function (req, res) {
-    res.render('createCall', {
-        teste: 'sasdasd'
-    });
-});
-
-app.get('/users/create', function (req, res) {
-    res.render('createUser');
-});
-
-app.get('/saveUser', function (req, res) {
-    res.send('Hello World!fff');
-    var test = new User();
-
-    test.save(function (err) {
-        if (err) throw err;
-        console.log('User saved successfully!');
-    });
-
-});
-
-
-var credentials_tone = extend({
-  version: 'v2',
-    url: 'https://gateway.watsonplatform.net/tone-analyzer-experimental/api',
-  username: '38505db1-0391-48ed-887d-bf646d7a5062',//
-  password: 'GpODak1w6Xxh'//
-}, bluemix.getServiceCreds('tone_analyzer'));
-
 
 // Create the service wrapper
 var toneAnalyzer = watson.tone_analyzer(credentials_tone);
 
-app.post('/tone', function(req, res, next) {
-  
-    toneAnalyzer.tone(req.body, function(err, data) {
-    if (err)
-      return next(err);
-    else
-      return res.json(data);
-  });
+app.post('/tone', function (req, res, next) {
+
+    toneAnalyzer.tone(req.body, function (err, data) {
+        if (err)
+            return next(err);
+        else
+            return res.json(data);
+    });
 });
 
-app.get('/synonyms', function(req, res, next) {
-  toneAnalyzer.synonym(req.query, function(err, data) {
-    if (err)
-      return next(err);
-    else
-      return res.json(data);
-  });
+app.get('/synonyms', function (req, res, next) {
+    toneAnalyzer.synonym(req.query, function (err, data) {
+        if (err)
+            return next(err);
+        else
+            return res.json(data);
+    });
 });
 
-//
-//var server = app.listen(3000, function () {
-//  var host = server.address().address;
-//  var port = server.address().port;
-//
-//  console.log('Example app listening at http://%s:%s', host, port);
-//});
 
+
+// Run Forrest run!
 var port = process.env.VCAP_APP_PORT || 3000;
 var server = app.listen(port, function () {
     var host = server.address().address;
