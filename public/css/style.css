@@ -30,7 +30,13 @@ body {
 .user_card {
     padding-top: 30px;
     font-size: 30px;
-    font-weight: bold;
     text-decoration: none;
     color: #0C2552;
+}
+
+.v-center {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    /*justify-content: center;*/
 }

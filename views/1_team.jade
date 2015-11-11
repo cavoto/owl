@@ -6,7 +6,6 @@ block row-content
             .col-lg-3.col-md-3.col-sm-12
                 each user in users
                     a(href="/user/#{user._id}")
-                        .row
                             mixin user_card(user)
             .col-lg-9.col-md-9.col-sm-12
                 canvas#graph_line
