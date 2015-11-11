@@ -8,7 +8,6 @@ block row-content
                 label.col-sm-4 User Name
                 div.col-sm-8
                     select#_user.form-control(name='_user')
-                        option john
                         for user in users
                             option #{user._id}
             div.form-group
@@ -38,6 +37,7 @@ block row-content
             div.form-group.pull-right
                 div.col-sm-8
                     button.login.btn.btn-primary(type='submit') Save
+         #{hack}
 block scripts
     script(type='text/javascript', src='/js/util.js')
     script(type='text/javascript', src='/js/lib/moment.min.js')
