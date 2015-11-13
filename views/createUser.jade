@@ -1,14 +1,33 @@
 extends ./layout.jade
 block row-content
-    div.container     
-        .row
-            .col-lg-12.col-md-12.col-sm-12
-                form#form_create
-                    .form-group
-                        label(for='_id') User Name
-                        input#_id.form-control(name='_id')
-                p 
-                    button#createUser_btn.btn.btn-default Submit
+    div.container
+        div.page-header
+            h1 Create USer
+
+        if errors
+            each error in errors
+                div.alert.alert-danger
+                    span #{error.error}
+        if saved
+            div.alert.alert-success
+                span Your profile has been saved
+        form#create_form.login-form.form-horizontal(role='form')
+            input(name='_csrf', type='hidden', value=csrfToken)
+            div.form-group
+                label.col-sm-4 Username
+                div.col-sm-8
+                    input.form-control(placeholder='Your username', required=true, name='_id', type='text', value=_id)
+            div.form-group
+                label.col-sm-4 First Name
+                div.col-sm-8
+                    input.form-control(placeholder='Your first name', required=true, name='firstName', type='text', value=firstName)
+            div.form-group
+                label.col-sm-4 Last Name
+                div.col-sm-8
+                    input.form-control(placeholder='Your last name', required=true, name='lastName', type='text', value=lastName)
+            div.form-group.pull-right
+                div.col-sm-8
+                    button.login.btn.btn-primary(type='submit') Save
 block scripts
     script(type='text/javascript', src='/js/util.js')
     script(type='text/javascript', src='/js/lib/moment.min.js')
