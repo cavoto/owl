@@ -1,13 +1,31 @@
 //- banner.jade
-div.row#menu
-  div.col-lg-12
-    div.row.top-nav.navbar-fixed-top
-      div.container
-          a(href="/")
-            img(src='/images/logo.png')
-     div.row.text-left
-        a(href="/") 
-            .col-lg-3.mngr_name
-                .mngr_title
-                    |Manager
-                | Joao
+nav.navbar.navbar-inverse.navbar-fixed-top
+    .container-fluid
+        .navbar-header
+            button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+                span.sr-only Toggle navigation
+                |             
+                span.icon-bar
+                |             
+                span.icon-bar
+                |             
+                span.icon-bar
+            a.logo(href='/')
+                img(src='/images/logo.png', height='40px;')
+        |         
+        #navbar.navbar-collapse.collapse
+            ul.nav.navbar-nav.navbar-right
+                li
+                    a(href='#') Dashboard
+                |             
+                li
+                    a(href='/users/create') Add User
+                |             
+                li
+                    a(href='/calls/create') Add Call
+                |             
+                li
+                    a(href='https://github.com/cavoto/owl') GitHub
+                li
+                    a(href='#')
+                        img.img-circle(src='/images/cavoto.jpg', width='20px')

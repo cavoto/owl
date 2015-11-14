@@ -7,19 +7,49 @@ mixin sentiment(value)
         img(src='/images/s_ruim_small.png', title='#{value}')
 mixin user_photo(name)
     if name !== undefined
-        img.img-circle(src='/images/#{name}', width='100px')
+        img.img-circle(src='/images/#{name}', width='70px')
     else
         img.img-circle(src='/images/user.png')
-mixin user_card(user)
-    .user_card.row
-        .col-lg-4.col-md-4.col-sm-4
-            mixin user_photo(user.picture)
-        .col-lg-4.col-md-4.col-sm-4.v-center
-            div.text-left
-                span(style='font-weight: bold;')
-                    | #{user.firstName}
-                br
-                span
-                    | #{user.lastName}
-        .col-lg-4.col-md-4.col-sm-4.v-center
-            mixin sentiment(user.sentiment)
+        
+        
+        
+        
+mixin card(user)
+    .media.container-fluid
+            .row
+                .col-md-3.col-xs-12
+                    a.pull-left(href='#')
+                      mixin user_photo(user.picture)
+                .col-md-6.col-xs-12
+                    div.media-body
+                        h4.media-heading
+                        | #{user.firstName} #{user.lastName}
+                .col-md-3.col-xs-12.label
+                    h4 
+                        mixin sentiment(user.sentiment) 
+            .row            
+                .col-md-12.col-xs-12.label.label-default
+                    h5.pull-left Calls  #{user.calls}
+
+mixin card_min(user)
+    .media.container-fluid
+        .row
+            .col-md-4.col-xs-12
+                a.pull-left(href='#')
+                  mixin user_photo(user.picture)
+            .col-md-8.col-xs-12
+                  div.media-body
+                    h4.media-heading
+                      | #{user.firstName} #{user.lastName}
+                      //small  IT Specialist
+                    |                 
+                    h5
+                      | Software Developer
+                    | 
+        .row            
+            .col-md-6.col-xs-12.label.label-default
+                h4 Calls
+                h4 #{user.calls}              
+            .col-md-6.col-xs-12.label.label-success
+                h4 
+                    mixin sentiment(user.sentiment)              
