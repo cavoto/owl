@@ -5,7 +5,7 @@ block row-content
         .col-lg-3.col-md-3.col-sm-12
             each user in users
                 a(href="/user/#{user._id}")
-                    mixin card(user)
+                    //mixin card(user)
                     mixin card_min(user)
         .col-lg-9.col-md-9.col-sm-12(style="text-align:center;")
             canvas#graph_line
