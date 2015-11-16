@@ -33,21 +33,20 @@ mixin card(user)
                 h5.pull-left Number of calls:  #{user.calls}
 
 mixin card_min(user)
-    .row
-        .col-lg-8
-            .media.container-fluid
-                .row.v-center
-                    .col-md-5.col-xs-12
-                        a.pull-left(href='#')
-                          mixin user_photo(user.picture)
-                    .col-md-7.col-xs-12
-                        h3
-                            | #{user.firstName}
-                            br
-                            | #{user.lastName}
-                .row            
-                    .col-md-12.col-xs-12.card_footer
-                        h5.pull-left
-                            | Overall sentiment   
-                        h5.pull-right
-                            mixin sentiment(user.sentiment, "small")
+    .col-lg-6
+        .media.container-fluid
+            .row.v-center
+                .col-md-5.col-xs-12
+                    .pull-left(href='#')
+                      mixin user_photo(user.picture)
+                .col-md-7.col-xs-12
+                    h3
+                        | #{user.firstName}
+                        br
+                        | #{user.lastName}
+            .row            
+                .col-md-12.col-xs-12.card_footer
+                    h5.pull-left
+                        | Overall sentiment   
+                    h5.pull-right
+                        mixin sentiment(user.sentiment, "small")
