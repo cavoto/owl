@@ -10,15 +10,15 @@ $(document).ready(function () {
             // Get context with jQuery - using jQuery's .get() method.
             var ctx = $("#graph_line").get(0).getContext("2d");
             _.forEach(graphObj.datasets, function (value, key) {
-                var color = get_color();
-                graphObj.datasets[key].fillColor = '#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6);
+                var color = get_color(key);
+                graphObj.datasets[key].fillColor = "rgba(" + color + ",0.3)";
                 graphObj.datasets[key].strokeColor = "rgba(" + color + ",1)";
                 graphObj.datasets[key].pointColor = "rgba(" + color + ",1)";
                 graphObj.datasets[key].pointHighlightFill = "#fff";
                 graphObj.datasets[key].fillColor = "rgba(" + color + ",0.2)";
-                graphObj.datasets[key].label= "My First dataset";
-                graphObj.datasets[key].pointStrokeColor= "#fff";
-                graphObj.datasets[key].pointHighlightStroke="rgba(" + color + ",1)";
+//                graphObj.datasets[key].label = "My First dataset";
+                graphObj.datasets[key].pointStrokeColor = "#fff";
+                graphObj.datasets[key].pointHighlightStroke = "rgba(" + color + ",1)";
             });
 
             // This will get the first returned node in the jQuery collection.
@@ -29,10 +29,13 @@ $(document).ready(function () {
     }
 });
 
-var color_choices = ['151,187,205', '220,220,220'];
+//var color_choices = ['151,187,205', '220,220,220', '221,209,199', '126,137,135'];
+//var color_choices = ['3,90,108', '29,108,114', '32,153,161', '143,204,208'];
+var color_choices = ['63,70,124', '3,90,108', '255,184,111', '165,87,101'];
 
-function get_color() {
-    return color_choices[Math.floor((Math.random() * 2))];
+function get_color(key) {
+    var index = key < color_choices.length ? key : Math.floor((Math.random() * 4));
+    return color_choices[index];
 }
 
 
@@ -58,6 +61,7 @@ var options = {
 
     // Number - Scale label font size in pixels
     scaleFontSize: 18,
+    multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>",
     // Interpolated JS string - can access value
     scaleLabel: function (data) {
 

@@ -10,7 +10,9 @@ html(lang='en')
 
         link(rel='shortcut icon', href='/images/favicon.ico', type='image/x-icon')
         link(rel='icon', href='/images/favicon.ico', type='image/x-icon')
-        link(rel='stylesheet', href='/css/watson-bootstrap-dark.css')
+        //link(rel='stylesheet', href='/css/watson-bootstrap-dark.css')
+        link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
+
         link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css')
         link(rel='stylesheet', href='/css/style.css')
         link(rel='stylesheet', href='/css/style_tone.css')
@@ -18,12 +20,12 @@ html(lang='en')
         include mixin.jade
     body
         include header.jade
-        
-        div.main
+        .container-fluid.main
             block row-content
         script(type='text/javascript', src='/js/lib/jquery-2.1.0.min.js')
         script(type='text/javascript', src='/js/lib/bootstrap-3.3.1.min.js')
         script(src='/js/lib/Chart.min.js')
         script(src='/js/lib/d3.v2.min.js')
         script(type='text/javascript', src='/js/lib/lodash.min.js')
+
         block scripts

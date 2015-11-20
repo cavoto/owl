@@ -1,25 +1,52 @@
-mixin sentiment(value)
+mixin sentiment(value, size)
     if _.floor(value) === 3
-        img(src='/images/s_bom_small.png', title='#{value}')
+        img(src='/images/s_bom_small.png', title='#{value}', class='#{size}')
     else if _.floor(value) === 2
-        img(src='/images/s_medio_small.png', title='#{value}')
+        img(src='/images/s_medio_small.png', title='#{value}', class='#{size}')
     else
-        img(src='/images/s_ruim_small.png', title='#{value}')
+        img(src='/images/s_ruim_small.png', title='#{value}', class='#{size}')
 mixin user_photo(name)
     if name !== undefined
-        img.img-circle(src='/images/#{name}', width='100px')
+        img.img-circle(src='/images/#{name}', width='70px')
     else
         img.img-circle(src='/images/user.png')
-mixin user_card(user)
-    .user_card.row
-        .col-lg-4.col-md-4.col-sm-4
-            mixin user_photo(user.picture)
-        .col-lg-4.col-md-4.col-sm-4.v-center
-            div.text-left
-                span(style='font-weight: bold;')
+        
+        
+        
+        
+mixin card(user)
+    .media.container-fluid
+        .row.v-center
+            .col-md-3.col-xs-12
+                a.pull-left(href='#')
+                  mixin user_photo(user.picture)
+            .col-md-6.col-xs-12
+                h3
                     | #{user.firstName}
-                br
-                span
+                    br
                     | #{user.lastName}
-        .col-lg-4.col-md-4.col-sm-4.v-center
-            mixin sentiment(user.sentiment)
+            .col-md-3.col-xs-12.label
+                h4 
+                    mixin sentiment(user.sentiment) 
+        .row            
+            .col-md-12.col-xs-12.card_footer
+                h5.pull-left Number of calls:  #{user.calls}
+
+mixin card_min(user)
+    .col-lg-6
+        .media.container-fluid
+            .row.v-center
+                .col-md-5.col-xs-12
+                    .pull-left(href='#')
+                      mixin user_photo(user.picture)
+                .col-md-7.col-xs-12
+                    h3
+                        | #{user.firstName}
+                        br
+                        | #{user.lastName}
+            .row            
+                .col-md-12.col-xs-12.card_footer
+                    h5.pull-left
+                        | Overall sentiment   
+                    h5.pull-right
+                        mixin sentiment(user.sentiment, "small")
