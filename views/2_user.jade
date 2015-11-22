@@ -7,27 +7,39 @@ block row-content
         .col-lg-4.col-md-4.col-sm-12
             .media.container-fluid
                 .row
-                    .col-lg-12.col-xs-12
-                        i.fa.fa-smile-o
-                        | &nbsp; Good
-                        .pull-right
-                            | 60%
+                    .col-lg-12.col-xs-12.text-center
+                        span.pull-left
+                            i.fa.fa-smile-o
+                            | &nbsp; Good
+                        span
+                            i.fa.fa-phone &nbsp;
+                            span#good_number 0
+                        span.pull-right#good_percentage
+                            | 0%
                         .progress(style='height: 6px;')
-                            .progress-bar.progress-bar-success(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100', style='width: 60%;')
-                    .col-lg-12.col-xs-12
-                        i.fa.fa-meh-o
-                        | &nbsp; Medium
-                        .pull-right
-                            | 60%
+                            .progress-bar.progress-bar-success#good_progress(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100', style='width: 0%;')
+                    .col-lg-12.col-xs-12.text-center
+                        span.pull-left
+                            i.fa.fa-meh-o
+                            | &nbsp; Medium
+                        span#medium_number
+                            i.fa.fa-phone &nbsp;
+                            | 0
+                        span.pull-right#medium_percentage
+                            | 0%
                         .progress(style='height: 6px;')
-                            .progress-bar.progress-bar-warning(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100', style='width: 60%;')
-                    .col-lg-12.col-xs-12
-                        i.fa.fa-frown-o
-                        | &nbsp; Bad
-                        .pull-right
-                            | 60%
+                            .progress-bar.progress-bar-warning#medium_progress(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100', style='width: 0%;')
+                    .col-lg-12.col-xs-12.text-center
+                        span.pull-left
+                            i.fa.fa-frown-o
+                            | &nbsp; Bad
+                        span
+                            i.fa.fa-phone &nbsp;
+                            span#bad_number 0
+                        span.pull-right#bad_percentage
+                            | 0%
                         .progress(style='height: 6px;')
-                            .progress-bar.progress-bar-danger(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100', style='width: 60%;')
+                            .progress-bar.progress-bar-danger#bad_progress(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100', style='width: 0%;')
                 .row         
                     .col-md-12.col-xs-12.card_footer
                         h5.text-center
@@ -35,7 +47,7 @@ block row-content
         .col-lg-2.col-md-2.col-sm-6
             .media.container-fluid
                 .row.v-center
-                    h3 100
+                    h3 #{calls.length}
                 .row            
                     .col-md-12.col-xs-12.card_footer
                         h5.text-center
@@ -43,13 +55,11 @@ block row-content
         .col-lg-2.col-md-2.col-sm-6
             .media.container-fluid
                 .row.v-center
-                    h3 5min
+                    h3 5 min
                 .row         
                     .col-md-12.col-xs-12.card_footer
                         h5.text-center
                             | Avg. time
-                            
-
     .row
     
         .col-lg-3.col-md-3.col-sm-12
@@ -68,5 +78,9 @@ block row-content
             canvas#graph_line
     div#graph_data(style="display:none;")
        | #{JSON.stringify(graph_data)}
+    div#calls_data(style="display:none;")
+       | #{JSON.stringify(calls)}
 block scripts
     script(type='text/javascript', src='/js/graph.js')
+    script(type='text/javascript', src='/js/util_user.js')
+    
