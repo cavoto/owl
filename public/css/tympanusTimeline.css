@@ -3,7 +3,7 @@
 /* with modifications */
 
 .cbp_tmtimeline {
-	margin: 30px 0 0 0;
+/*	margin: 30px 0 0 0;*/
 	padding: 0;
 	list-style: none;
 	position: relative;
@@ -13,11 +13,12 @@
 .cbp_tmtimeline:before {
 	content: '';
 	position: absolute;
-	top: 0;
+/*	top: 0;*/
+	top: 13px;
 	bottom: 0;
 	width: 10px;
 	background: #afdcf8;
-	left: 40%;
+	left: 15%;
 	margin-left: -10px;
 }
 
@@ -30,8 +31,8 @@
 .cbp_tmtimeline > li .cbp_tmtime {
 	display: block;
 /*	width: 25%;*/
-	padding-right: 100px;
-	position: absolute;
+	padding-right: 30px;
+/*	position: absolute;*/
 }
 
 .cbp_tmtimeline > li .cbp_tmtime span {
@@ -117,8 +118,8 @@
 	border-radius: 50%;
 	box-shadow: 0 0 0 8px #afdcf8;
 	text-align: center;
-	left: 40%;
-	top: 0;
+	left: 15%;
+	top: 20px;
 	margin: 0 0 0 -25px;
 }
 
@@ -185,6 +186,6 @@
 		position: relative;
 		float: right;
 		left: auto;
-		margin: -55px 5px 0 0px;
+		margin: 0px 13px 0px 0px;
 	}	
 }

@@ -53,12 +53,13 @@ canvas {
     height: 100px;
     display: flex;
     align-items: center;
-    /*justify-content: center;*/
+    justify-content: center;
 }
 
 a:link {
     text-decoration: none;
 }
+
 
 /**/
 
@@ -94,4 +95,22 @@ a:link {
 
 .large {
     height: 25px;
+}
+
+.progress {
+    margin-bottom: 9px !important;
+}
+
+li {
+    cursor: pointer;
+    cursor: hand;
+}
+
+li:hover {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    background-color: #eee;
+}
+
+.cbp_tmtimeline:before :first-child {
+    background-color: yellow;
 }
