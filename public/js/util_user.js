@@ -20,8 +20,8 @@ $(document).ready(function () {
     }
 
     if (bySentiment[2] !== undefined) {
-        $("#medium_percentage").text(bySentiment[2].length);
-        diffPercent = ((bySentiment[1].length / total) * 100).toFixed(1);
+        $("#medium_number").text(bySentiment[2].length);
+        diffPercent = ((bySentiment[2].length / total) * 100).toFixed(1);
         $("#medium_percentage").text(diffPercent + "%");
         $("#medium_progress").css("width", diffPercent + "%");
     }
@@ -29,7 +29,6 @@ $(document).ready(function () {
         $("#bad_number").text(bySentiment[1].length);
         diffPercent = ((bySentiment[1].length / total) * 100).toFixed(1);
         $("#bad_percentage").text(diffPercent + "%");
-
         $("#bad_progress").css("width", diffPercent + "%");
     }
 

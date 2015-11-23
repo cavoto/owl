@@ -3,7 +3,7 @@ block row-content
     div.container
         div.page-header
             h1 Create Call
-        form#create_form_call.login-form.form-horizontal(role='form')
+        form#create_form_ceeall.login-form.form-horizontal(action="/speech", method="post", enctype="multipart/form-data")
             div.form-group
                 label.col-sm-4 User Name
                 div.col-sm-8
@@ -14,7 +14,7 @@ block row-content
                 label.col-sm-4 Date
                 div.col-sm-8
                     #datetimepicker12.input-group.date
-                            input.form-control(type='text', name='date')
+                            input.form-control(type='text', name='date', required=true)
                             span.input-group-addon
                                 span.fa.fa-calendar
             br
@@ -32,7 +32,7 @@ block row-content
                             option 3
             div.form-group
                 label(for='audioFile') File input
-                input#audioFile(type='file')
+                input(type="file", name="audio")
                         
             div.form-group.pull-right
                 div.col-sm-8

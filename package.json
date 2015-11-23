@@ -12,6 +12,7 @@
     "body-parser": "~1.14.1",
     "errorhandler": "~1.4.1",
     "express": "~4.13.3",
+    "formidable": "^1.0.17",
     "jade": "~1.11.0",
     "lodash": "^3.10.1",
     "moment": "^2.10.6",

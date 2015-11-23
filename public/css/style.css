@@ -110,3 +110,23 @@ li:hover {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     background-color: #eee;
 }
+
+.navbar {
+    background: #0C2552;
+    color: white;
+}
+.navbar-nav>li>a {
+    color: white;
+}
+
+.progress-bar-good {
+    background: #266C42;
+}
+
+.progress-bar-medium {
+    background: #FAB42F;
+}
+
+.progress-bar-bad {
+    background: #A33234;
+}
