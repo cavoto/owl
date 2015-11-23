@@ -7,7 +7,9 @@ var express = require('express'),
     watson = require('watson-developer-cloud'),
     mongoose = require('mongoose'),
     moment = require('moment'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    formidable = require('formidable'),
+    fs = require('fs');
 
 var User = require('./config/models/User.js');
 var Call = require('./config/models/Call.js');
@@ -43,6 +45,16 @@ var credentials_tone = extend({
 }, bluemix.getServiceCreds('tone_analyzer'));
 //##//
 
+
+
+//############## speech_to_text services  ##############//
+var credentials_speech = extend({
+    version: 'v1',
+    url: 'https://stream.watsonplatform.net/speech-to-text/api',
+    username: '031b61a5-24be-41a5-81e4-8178cf4f8d48', //
+    password: 'G4ZcsVq2JYfW' //
+}, bluemix.getServiceCreds('speech_to_text'));
+//##//
 
 
 //############## Page routes  ##############//
@@ -91,15 +103,14 @@ app.get('/', function (req, res) {
         };
 
         _.forOwn(calls, function (calls_arr, key) {
-            console.log(key);
+            //            console.log(key);
             temp = [];
             for (var i = 0; i < 24; i++) {
                 temp[i] = 0
             };
             _.forEach(calls_arr, function (call, key) {
-                console.log("bbb");
                 var hour = moment(call.date).format('HH')
-                console.log(Number(hour));
+                    //                console.log(Number(hour));
                 temp[Number(hour)] = call.sentiment;
             });
 
@@ -138,17 +149,7 @@ app.get('/user/:username', function (req, res) {
 
             var dataT = {
                 labels: [],
-                //            labels: [],
-                datasets: [
-//                {
-//                    label: "My First dataset",
-//                    fillColor: "rgba(220,220,220,0.2)",
-//                    strokeColor: "rgba(220,220,220,1)",
-//                    pointColor: "rgba(220,220,220,1)",
-//                    pointHighlightFill: "#fff",
-//                    data: [1, 2, 3, 3, 2, 1, 1, 1, 1]
-//        }
-    ]
+                datasets: []
             };
             var temp = [];
             _.forEach(calls, function (call, key) {
@@ -198,16 +199,25 @@ app.get('/user/:username/call/:callid', function (req, res) {
 
 
 app.get('/calls/create', function (req, res) {
+    var hack = (req.query.hack || false);
+    console.log(hack);
     User.find({}, function (err, users) {
         if (err) throw err;
         // object of all the users
-        res.render('createCall', {users : users});
+        res.render('createCall', {
+            users: users,
+            hack: hack
+        });
     });
-    
+
 });
 
 app.get('/users/create', function (req, res) {
-    res.render('createUser');
+    var hack = (req.query.hack || false);
+    console.log(hack);
+    res.render('createUser', {
+        hack: hack
+    });
 });
 
 //##########################################//
@@ -311,6 +321,37 @@ app.get('/synonyms', function (req, res, next) {
     });
 });
 
+
+// Create the service wrapper
+var sppechToText = watson.speech_to_text(credentials_speech);
+
+app.post('/speech', function (req, res, next) {
+    var form = new formidable.IncomingForm();
+
+    form.parse(req, function (err, fields, files) {
+        // `file` is the name of the <input> field of type `file`
+        console.log(files);
+
+        var params = {
+            audio: fs.createReadStream(files.audio.path),
+            content_type: 'audio/wav',
+            continuous: 'true'
+        };
+        sppechToText.recognize(params, function (err, data) {
+            if (err) {
+                console.log('aaaBBB');
+                console.log(JSON.stringify(err, null, 2));  
+                return next(err);
+            } else {
+                console.log('aaa');
+                console.log(JSON.stringify(data, null, 2));   
+                return res.json(data);
+            }
+
+        });
+    });
+
+});
 
 
 // Run Forrest run!
