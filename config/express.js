@@ -24,9 +24,9 @@ var express = require('express'),
 module.exports = function (app) {
 
     // Configure Express
-//    app.use(bodyParser.urlencoded({
-//        extended: true
-//    }));
+    app.use(bodyParser.urlencoded({
+        extended: true
+    }));
 //    app.use(express.multipart());
 
     app.use(bodyParser.json());
