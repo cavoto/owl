@@ -305,10 +305,11 @@ var toneAnalyzer = watson.tone_analyzer(credentials_tone);
 app.post('/tone', function (req, res, next) {
 
     toneAnalyzer.tone(req.body, function (err, data) {
-        if (err)
+        if (err) {
             return next(err);
-        else
+        } else {
             return res.json(data);
+        }
     });
 });
 
@@ -339,15 +340,16 @@ app.post('/speech', function (req, res, next) {
         };
         sppechToText.recognize(params, function (err, data) {
             if (err) {
-                console.log('aaaBBB');
-                console.log(JSON.stringify(err, null, 2));  
+                console.log(JSON.stringify(err, null, 2));
                 return next(err);
             } else {
-                console.log('aaa');
-                console.log(JSON.stringify(data, null, 2));   
-                return res.json(data);
+                console.log(JSON.stringify(data, null, 2));
+                var transcription = "";
+                _.each(data.results, function (result) {
+                    transcription = transcription + result.alternatives[0].transcript
+                });
+                return res.json(transcription);
             }
-
         });
     });
 
